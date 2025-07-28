@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DumpsterType {
+  id              Int      @id @default(autoincrement())
+  sizeCubicYards  Int      @map("size_cubic_yards")
+  lengthFt        Decimal  @map("length_ft") @db.Decimal(4, 1)
+  widthFt         Decimal  @map("width_ft") @db.Decimal(4, 1)
+  heightFt        Decimal  @map("height_ft") @db.Decimal(4, 1)
+
+  @@map("dumpster_types")
+}
+
+model MaterialType {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(100)
+  category    String? @db.VarChar(50)
+  description String?
+
+  @@map("material_types")
+}
+
+model ServiceArea {
+  id       Int     @id @default(autoincrement())
+  zipCode  String  @map("zip_code") @db.VarChar(10)
+  city     String? @db.VarChar(100)
+  state    String? @db.VarChar(50)
+  region   String? @db.VarChar(50)
+  isActive Boolean @default(true) @map("is_active")
+
+  @@map("service_areas")
+}

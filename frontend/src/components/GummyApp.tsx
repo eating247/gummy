@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { GummyAPI } from '../services/api';
-import { DumpsterType, MaterialType, ServiceArea } from '../types/api';
 
 // Types
 interface DumpsterType {
@@ -27,27 +26,6 @@ interface ServiceArea {
   isActive: boolean;
 }
 
-// Mock API for demonstration (replace with real API calls)
-const mockAPI = {
-  getDumpsterTypes: (): Promise<DumpsterType[]> => 
-    Promise.resolve([
-      { id: 1, sizeCubicYards: 10, lengthFt: 13.0, widthFt: 8.0, heightFt: 4.0 },
-      { id: 2, sizeCubicYards: 15, lengthFt: 16.0, widthFt: 8.0, heightFt: 4.0 },
-      { id: 3, sizeCubicYards: 20, lengthFt: 22.0, widthFt: 8.0, heightFt: 3.5 },
-      { id: 4, sizeCubicYards: 30, lengthFt: 22.0, widthFt: 8.0, heightFt: 5.0 },
-      { id: 5, sizeCubicYards: 40, lengthFt: 22.0, widthFt: 8.0, heightFt: 7.0 },
-    ]),
-  
-  getMaterialTypes: (): Promise<MaterialType[]> =>
-    Promise.resolve([
-      { id: 1, name: 'Household Junk', category: 'household', description: 'General household items, clothing, books, toys' },
-      { id: 2, name: 'Furniture', category: 'furniture', description: 'Couches, chairs, tables, dressers, mattresses' },
-      { id: 3, name: 'Appliances', category: 'appliances', description: 'Refrigerators, washers, dryers, dishwashers, stoves' },
-      { id: 4, name: 'Renovation Debris', category: 'renovation', description: 'Drywall, flooring, tiles, cabinets, construction waste' },
-      { id: 5, name: 'Yard Waste', category: 'yard', description: 'Branches, leaves, grass clippings, landscaping debris' },
-    ]),
-};
-
 const GummyApp: React.FC = () => {
   const [dumpsterTypes, setDumpsterTypes] = useState<DumpsterType[]>([]);
   const [materialTypes, setMaterialTypes] = useState<MaterialType[]>([]);
@@ -61,8 +39,8 @@ const GummyApp: React.FC = () => {
       try {
         setLoading(true);
         const [dumpsters, materials] = await Promise.all([
-          mockAPI.getDumpsterTypes(),
-          mockAPI.getMaterialTypes(),
+          GummyAPI.getDumpsterTypes(),
+          GummyAPI.getMaterialTypes(),
         ]);
         setDumpsterTypes(dumpsters);
         setMaterialTypes(materials);
@@ -146,6 +124,9 @@ const GummyApp: React.FC = () => {
             <div className="text-4xl">🍬</div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
+              <div className="bg-red-500 text-white p-4">
+test tailwind
+</div>
                 <span className="text-purple-600">Gummy</span> Dumpster Rentals
               </h1>
               <p className="text-gray-600">Transparent pricing, no hidden fees</p>
